@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using BoardZ.API.Helpers;
+using Microsoft.ApplicationInsights;
 
 namespace BoardZ.API
 {
@@ -66,6 +67,8 @@ namespace BoardZ.API
                     {
                         OnAuthenticationFailed = context =>
                         {
+                            var telemetry = new TelemetryClient();
+                            telemetry.TrackException(context.Exception);
                             context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
                             context.Fail(context.Exception.Message);
                             return Task.CompletedTask;

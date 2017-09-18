@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using Microsoft.ApplicationInsights;
 
 namespace BoardZ.API.Filters
 {
@@ -18,7 +19,9 @@ namespace BoardZ.API.Filters
         }
         public void OnException(ExceptionContext context)
         {
+            TelemetryClient telemetry = new TelemetryClient();
             Logger.LogError(666, context.Exception, context.Exception.Message);
+            telemetry.TrackException(context.Exception);
             string message;
             string stackTrace;
             if (HostingEnvironment.IsProduction())
