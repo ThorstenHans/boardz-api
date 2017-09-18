@@ -20,6 +20,8 @@ namespace BoardZ.API
 
             var host = new WebHostBuilder()
                 .UseApplicationInsights()
+                .CaptureStartupErrors(true)
+                .UseKestrel()
                 .UseConfiguration(config)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -27,8 +29,6 @@ namespace BoardZ.API
                     logging.AddConsole();
                     logging.AddDebug();
                 })
-                .CaptureStartupErrors(true)
-                .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
