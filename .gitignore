@@ -1,0 +1,8 @@
+**/.vscode/
+**/.vs/
+**/bin/
+**/obj/
+**/packages/
+**/*.user
+.DS_Store
+docker.env
